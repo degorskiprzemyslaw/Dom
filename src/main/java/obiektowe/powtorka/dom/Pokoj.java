@@ -16,7 +16,10 @@ public class Pokoj {
 
     public void posprzatajPokoj(){
         lozko.setLicznikDniOdWymianyPoscieli(0);
-        
+        for(Okno o : okna){
+            o.otworzOkno();
+        }
+
 
     }
 }
