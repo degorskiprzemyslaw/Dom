@@ -3,11 +3,12 @@ package obiektowe.powtorka.osoby.warsztat;
 public class Warsztat {
 
     private Samochod samochod;
-    private Paragon paragon;
+
 
     public Paragon naprawa(Samochod samochod){
+        int counter = 0;
         for(Kolo kolo : samochod.getKola()){
-            int counter = 0;
+
 
             if(kolo.isPrzebicie()){
                 counter++;
@@ -15,9 +16,11 @@ public class Warsztat {
                 kolo.setCisnienie(2.2);
             }
 
-            paragon.setLacznaCena(counter * paragon.cena);
-            paragon.setLicznik(counter);
+
         }
+        Paragon paragon = new Paragon();
+        paragon.setLacznaCena(counter * paragon.cena);
+        paragon.setLicznik(counter);
 
     return paragon;
     }

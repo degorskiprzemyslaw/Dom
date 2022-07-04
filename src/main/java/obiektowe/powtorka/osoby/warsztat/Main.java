@@ -28,14 +28,16 @@ public class Main {
         }
 
         Warsztat doNaprawy = new Warsztat();
-        Paragon paragon = new Paragon();
-        paragon = doNaprawy.naprawa(samochod);
+
+        Paragon paragon = doNaprawy.naprawa(samochod);
 
         System.out.println();
 
         for(Kolo kolo : samochod.getKola()){
             System.out.println(kolo);
         }
+
+        System.out.println(paragon);
 
 
 
