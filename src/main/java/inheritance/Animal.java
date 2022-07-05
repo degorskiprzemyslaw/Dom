@@ -1,6 +1,6 @@
 package inheritance;
 
-public class Animal {
+public abstract class Animal { //nie mozna stworzyc obiektu z klasy abstrakcyjnej -> nie dziala new Animal, ale moze byc w liscie
 
 
 
@@ -11,4 +11,9 @@ public class Animal {
     public void goToSleep(){
         System.out.println("Zwierze spi");
     }
+
+    public abstract void makeSound(); //metoda abstrakcyjna NIE MA CIALA (KLAMER)
+    //TRZEBA JA NADPISYWAC
+
+
 }

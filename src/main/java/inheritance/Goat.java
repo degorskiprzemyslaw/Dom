@@ -10,6 +10,11 @@ public class Goat extends Animal{
         this.age = age;
     }
 
+    public Goat(){
+        name = "Felicja";
+        age = 3;
+    }
+
     public void sayMee(){
         System.out.println("Meeeee!");
     }
@@ -19,5 +24,10 @@ public class Goat extends Animal{
 
     public void giveMilk(){
         System.out.println(name + " jest dojona");
+    }
+
+    @Override
+    public void makeSound() {
+        System.out.println("Meeeeeee");
     }
 }

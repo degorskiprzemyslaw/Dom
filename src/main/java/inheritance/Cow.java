@@ -10,6 +10,12 @@ public class Cow extends Animal{
         this.age = age;
     }
 
+    public Cow(){
+        name = "Dudus";
+        age = 9;
+
+    }
+
     public void sayMoo(){
         System.out.println("Moooo!");
     }
@@ -19,5 +25,11 @@ public class Cow extends Animal{
 
     public void giveMilk(){
         System.out.println(name + " jest dojona");
+    }
+
+    @Override
+    public void makeSound() {
+        System.out.println("Mooooo");
+
     }
 }

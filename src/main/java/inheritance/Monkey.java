@@ -29,4 +29,9 @@ public class Monkey extends Animal {
     public void eat(){ //NADPISYWANIE METODY - TAKA JUZ JEST W ANIMAL
         System.out.println("Małpa je banana!");
     }
+
+    @Override
+    public void makeSound() {
+        uhaha();
+    }
 }

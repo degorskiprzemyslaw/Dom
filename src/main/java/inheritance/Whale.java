@@ -30,4 +30,9 @@ public class Whale extends Animal{ //DZIECZENIE PO KLASIE ANIMAL
         super.eat(); //wersja z klasy po ktorej dziedziczy
         System.out.println("Czyli je plankton");
     }
+
+    @Override
+    public void makeSound() {
+        booing();
+    }
 }
