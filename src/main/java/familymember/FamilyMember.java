@@ -2,7 +2,9 @@ package familymember;
 
 public interface FamilyMember {
 
-    public abstract void przedstawSie();
+    default void przedstawSie(){
+        System.out.println("I am just a simple family member");
+    }
 
     public abstract boolean jestDorosly();
 }
