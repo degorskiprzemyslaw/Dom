@@ -6,7 +6,7 @@ import java.util.List;
 
 public class MyArrayListDemo {
     public static void main(String[] args) {
-        List<Integer> list1 = new ArrayList<>();
+        List<Integer> list1 = new MyArrayList<>(); //BAZUJE NA TABLICACH
         //[0][0][0]
         //add(10)
         //[10][0][0]
@@ -23,8 +23,22 @@ public class MyArrayListDemo {
         // {[10][10]} [20][30][35][0]
         // {[7]} [10][20][30][35][0]
 
-        List<Integer> list2 = new LinkedList<>();
-        //null
+        list1.add(10);
+        list1.add(12);
+        list1.add(13);
+        list1.add(14);
+        list1.add(15);
+        list1.add(16);
+        list1.add(17);
+        System.out.println(list1);
+        list1.remove(Integer.valueOf(10));
+        System.out.println(list1);
+        list1.remove(9);
+        System.out.println(list1);
+
+
+        List<Integer> list2 = new LinkedList<>(); //linked lista TWORZY WLASNE OBIEKTY (NODEY)
+        //null -> NA POCZATKU MA SIE TOITALNIE PUSTA LISTE (A NIE Z ZADANYI MIEJSCAMI DEFAULTOWYMI NP ARRAY MA 10)
         //add(10)
         //([10])>null
         //add(20)

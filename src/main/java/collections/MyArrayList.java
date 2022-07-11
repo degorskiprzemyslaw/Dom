@@ -1,34 +1,115 @@
 package collections;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
+import java.util.*;
 
 public class MyArrayList<E> implements List<E> {
 
-    private E[] elements = (E[]) new Object[10];
+    private E[] elements = (E[]) new Object[10]; //MEGA WAZNE - TRZEBA DAC OBJECT I RZUTOWAC NA TYP GENERYCZNY
+    private int actualSize = 0;
 
+
+    @Override
+    public boolean add(E e) {
+        if (e == null) { //na razie nie akceptujemy nulli
+            return false;
+        }
+        elements[actualSize++] = e;//inkrementacja dzieje sie po przypisaniu, wklada element jako kolejny element, nie wypycha restzy
+        if (actualSize == elements.length) { //jeśli koniec miejsca - powiesz zbior
+            grow();
+        }
+        return true;
+    }
+
+    private void grow() {  //dodaj 2x tyle miejsca
+       /* E[] newArray = (E[]) new Object[elements.length*2];
+       c for (int i = 0; i < elements.length; i++) {
+            newArray[i] = elements[i];
+        }
+          elements = newArray;
+        */
+
+        elements = Arrays.copyOf(elements, elements.length * 2); //wytwarzanie kopii tablicy -> to co sie dzieje ponad tym
+    }
+
+
+
+   /* @Override
+    public boolean add(E e) {
+        if (e == null) { //na razie nie akceptujemy nulli
+            return false;
+        }
+        for(int i = 0 ; i <elements.length; i++){ //przegladam wszystkie
+            if (elements[i] == null) { // to z nullem oznacza wolne miejsce
+                elements[i] = e; // wstawiam
+                break;
+            }
+        }
+        actualSize++;
+        return true;
+    }*/
+
+
+    //MOJA WERSJA ADD Z INDEXEM
+    /*@Override
+    public void add(int index, E element) {
+        actualSize++;
+        if(index == actualSize - 1 ){
+            elements[index] = element;
+        }else{
+            for(int i = actualSize - 2; i >= index; i--){
+                elements[i+1] = elements[i];
+            }
+            elements[index] = element;
+        }
+    }*/
+
+    @Override
+    public void add(int index, E element) {
+        // 6 , 3, 4, 8    = 4 actualSize
+        // 0   1  2  3
+
+        // 6 , 3, 4, 8, 8
+        // 6 , 3, 4, 4, 8
+        // 6 , 3, 3, 4, 8
+        // 6 , 9, 3, 4, 8
+        for (int i = actualSize - 1; i >= index; i--) {
+            elements[i + 1] = elements[i];
+        }
+        elements[index] = element;
+        actualSize++;
+        if (actualSize == elements.length) { //jeśli koniec miejsca - powiesz zbior
+            grow(); //to sie dzieje przy dodawaniu 10 elementu wiec jest juz ustawiony nowy size przy dodawaniu 11
+        }
+    }
+
+   /* @Override
+    public int size() {
+        for (int i = 0; i < elements.length; i++) {
+            if (elements[i] == null) { // jestem przy ostatnim elemencie wiec i = size
+                return i;
+            }
+        }
+        return 0;
+    }*/
 
     @Override
     public int size() {
-        return elements.length;
+        return actualSize;
     }
+
 
     @Override
     public boolean isEmpty() {
-        for (E element : elements) {
-            if (element != null) {
-                return true;
-            }
-        }
-        return false;
+        return actualSize == 0;
     }
 
     @Override
     public boolean contains(Object o) {
         for (E element : elements) {
-            if (element == o) {
+            if (element == null) {
+                break;
+            }
+            if (element.equals(o)) {
                 return true;
             }
         }
@@ -51,26 +132,71 @@ public class MyArrayList<E> implements List<E> {
     }
 
     @Override
-    public boolean add(E e) {
-        for (E element : elements) {
-            if (element == null) {
-                element = e;
-            }
-        }
-
-
-        return true;
+    public String toString() {
+        return "MyArrayList{" +
+                "elements=" + Arrays.toString(elements) +
+                ", actualSize=" + actualSize +
+                '}';
     }
 
     @Override
     public boolean remove(Object o) {
-        for (E element : elements) {
-            if (element == o) {
-                element = null;
-            }
-        }
+        //1) szuka obiektu po petli
+        //2) jak znajdzie to zamienia na null
+        //3) przesuwa reszte w lewo
+        //4) zmniejsza actualSize
 
+        boolean matchElement = false;
+        try {
+        for (int i = 0; i < actualSize; i++) {
+            if (elements[i].equals(o)) {
+                elements[i] = null;
+                for (int j = i; j < actualSize; j++) {
+                    if (j == actualSize - 1) {
+                        elements[j] = null;
+                    } else {
+                        elements[j] = elements[j + 1];
+                    }
+                }
+                actualSize--;
+                matchElement = true;
+                break;
+            }
+        }if (!matchElement){
+                throw new IndexOutOfBoundsException();
+            }
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Wartosci " + o + " nie ma w liscie, lista pozostala bez zmian");
+        }
         return true;
+    }
+
+    @Override
+    public E remove(int index) {
+
+        boolean matchElement = false;
+        try {
+            for (int i = 0; i < actualSize; i++) {
+                if (i == index) {
+                    elements[i] = null;
+                    for (int j = i; j < actualSize; j++) {
+                        if (j == actualSize - 1) {
+                            elements[j] = null;
+                        } else {
+                            elements[j] = elements[j + 1];
+                        }
+                    }
+                    actualSize--;
+                    matchElement = true;
+                    break;
+                }
+            }if (!matchElement){
+                throw new IndexOutOfBoundsException();
+            }
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Indeksu " + index + " nie ma w liscie, lista pozostala bez zmian");
+        }
+        return null;
     }
 
     @Override
@@ -105,6 +231,10 @@ public class MyArrayList<E> implements List<E> {
 
     @Override
     public E get(int index) {
+
+        if (index < 0 || index >= actualSize) {
+            throw new IndexOutOfBoundsException();
+        }
         return elements[index];
     }
 
@@ -114,15 +244,7 @@ public class MyArrayList<E> implements List<E> {
         return elements[index] = element;
     }
 
-    @Override
-    public void add(int index, E element) {
 
-    }
-
-    @Override
-    public E remove(int index) {
-        return null;
-    }
 
     @Override
     public int indexOf(Object o) {
