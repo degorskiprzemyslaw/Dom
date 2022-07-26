@@ -22,15 +22,16 @@ public class SortingAlgorithm {
         System.out.println("Sortujemy selection sort!");
 
 
-        int index = 0;
+        int index;
 
 
         for(int j = 0; j < numbers.size(); j++){
             int min = numbers.get(j);
+            index = j;
 
             for (int i = j; i < numbers.size() ; i++){
                 int number = numbers.get(i);
-                if(number <= min){
+                if(number < min){
                     min = number;
                     index = i;
 
