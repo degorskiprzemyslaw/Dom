@@ -62,9 +62,9 @@ public class MyStreamService implements StreamService{
 
     @Override
     public boolean hasSenior(List<Person> people) {
-        return people.stream()
-                .filter(person -> person.getAge() == 60)
-                .toList().isEmpty();
+        return !(people.stream()
+                .filter(person -> person.getAge() > 60)
+                .toList().isEmpty());
     }
 
     @Override
